@@ -1,0 +1,98 @@
+
+<html>
+<head>
+<script src="jquery-3.2.1.js"></script>
+<script type="text/javascript">
+word_index = 0;
+first_grade = [
+    "after",
+    "again",
+    "an",
+    "any",
+    "as",
+    "ask",
+    "by",
+    "could",
+    "every",
+    "fly",
+    "from",
+    "give",
+    "going",
+    "had",
+    "has",
+    "her",
+    "him",
+    "his",
+    "how",
+    "just",
+    "know",
+    "let",
+    "live",
+    "may",
+    "of",
+    "old",
+    "once",
+    "open",
+    "over",
+    "put",
+    "round",
+    "some",
+    "stop",
+    "take",
+    "thank",
+    "them",
+    "then",
+    "think",
+    "walk",
+    "were",
+    "when",
+];
+word_list = null;
+function start_words() {
+    word_list = first_grade.map(function(w) {
+        return {word: w, rank: Math.random()};
+    });
+    word_list.sort(function(a, b) {
+        return b.rank - a.rank;
+    });
+    var first_word = word_list[word_index].word;
+    document.getElementById("word").innerHTML = first_word;
+    $(".init_show").hide();
+    $(".init_hide").show();
+    start_time = (new Date()).getTime();
+}
+function next_word() {
+    ++word_index;
+    if (word_index < word_list.length) {
+        var next_word = word_list[word_index].word;
+        document.getElementById("word").innerHTML = next_word;
+    } else {
+        var end_time = ((new Date()).getTime() - start_time) / 1000;
+        document.getElementById("ready").innerHTML =
+            "<p>All Done: "+ end_time +" seconds</p>";
+        $(".init_hide").hide();
+        $("#ready").show();
+    }
+}
+</script>
+<style>
+.init_show {
+}
+.init_hide {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+    <h1 id="ready" class="init_show">Ready?</h1>
+    <h1 id="word" class="init_hide">()</h1>
+    <button type="button" class="init_show" onclick='start_words()'>
+        START
+    </button>
+    <button type="button" class="init_hide" onclick='next_word()'>
+        NEXT
+    </button>
+</body>
+</html>
+
