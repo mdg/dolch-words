@@ -74,6 +74,13 @@ function next_word() {
         $("#ready").show();
     }
 }
+
+$(window).keypress(function(e) {
+    if (e.keyCode === 0 || e.keyCode === 0x20) {
+        e.preventDefault();
+        next_word();
+    }
+})
 </script>
 <style>
 .init_show {
