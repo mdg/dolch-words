@@ -72,6 +72,7 @@ function next_word() {
             "<p>All Done: "+ end_time +" seconds</p>";
         $(".init_hide").hide();
         $("#ready").show();
+        $(window).off("keypress", "", next_word);
     }
 }
 
