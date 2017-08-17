@@ -47,6 +47,7 @@ first_grade = [
     "were",
     "when",
 ];
+
 word_list = null;
 function start_words() {
     word_list = first_grade.map(function(w) {
@@ -66,6 +67,7 @@ function next_word() {
     if (word_index < word_list.length) {
         var next_word = word_list[word_index].word;
         document.getElementById("word").innerHTML = next_word;
+        $("#typespace")[0].value = "";
     } else {
         var end_time = ((new Date()).getTime() - start_time) / 1000;
         document.getElementById("ready").innerHTML =
@@ -76,12 +78,18 @@ function next_word() {
     }
 }
 
-$(window).keypress(function(e) {
-    if (e.keyCode === 0 || e.keyCode === 0x20) {
-        e.preventDefault();
-        next_word();
-    }
-})
+$(function() {
+    $("#typespace").val("");
+    $("#typespace").keyup(function(e) {
+        var typespace = $(e.currentTarget)[0];
+        var newval = typespace.value;
+        var checkword = word_list[word_index].word;
+        if (newval === checkword) {
+            next_word();
+            // e.preventDefault();
+        }
+    });
+});
 </script>
 <style>
 .init_show {
@@ -95,6 +103,7 @@ $(window).keypress(function(e) {
 <body>
     <h1 id="ready" class="init_show">Ready?</h1>
     <h1 id="word" class="init_hide">()</h1>
+    <p><input id="typespace" class="init_hide" type="text"></input></p>
     <button type="button" class="init_show" onclick='start_words()'>
         START
     </button>
