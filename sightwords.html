@@ -166,6 +166,8 @@ function start_words() {
 
     var first_word = word_list[word_index].word;
     document.getElementById("word").innerHTML = first_word;
+    $("#p_grade_boxes").hide();
+    $("#p_word_count").hide();
     $(".init_show").hide();
     $(".init_hide").show();
     start_time = (new Date()).getTime();
@@ -211,12 +213,12 @@ $(function() {
 <body>
     <h1 id="ready" class="init_show">Ready?</h1>
     <h1 id="word" class="init_hide">()</h1>
-    <p>
+    <p id="p_grade_boxes">
       <input type="checkbox" checked=1 id="grade1">Grade 1</input>
       <input type="checkbox" checked=1 id="grade2">Grade 2</input>
       <input type="checkbox" checked=1 id="grade3">Grade 3</input>
     </p>
-    <p>
+    <p id="p_word_count">
       <select id="word_count" value="10">
           <option value="10">10</option>
           <option value="20">20</option>
