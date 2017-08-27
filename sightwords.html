@@ -142,14 +142,28 @@ third_grade = [
     "warm",
 ];
 
-word_list = null;
+word_list = [];
 function start_words() {
-    word_list = first_grade.map(function(w) {
+    var raw_words = [];
+    if ($("#grade1")[0].value) {
+        raw_words = first_grade;
+    }
+    if ($("#grade2")[0].value) {
+        raw_words = raw_words.concat(second_grade);
+    }
+    if ($("#grade3")[0].value) {
+        raw_words = raw_words.concat(third_grade);
+    }
+    var str_num_words = $("#word_count")[0].value;
+    var num_words = parseInt(str_num_words);
+    var all_word_list = raw_words.map(function(w) {
         return {word: w, rank: Math.random()};
     });
-    word_list.sort(function(a, b) {
+    all_word_list.sort(function(a, b) {
         return b.rank - a.rank;
     });
+    word_list = all_word_list.slice(0, num_words);
+
     var first_word = word_list[word_index].word;
     document.getElementById("word").innerHTML = first_word;
     $(".init_show").hide();
@@ -203,7 +217,7 @@ $(function() {
       <input type="checkbox" checked=1 id="grade3">Grade 3</input>
     </p>
     <p>
-      <select id="count" value="10">
+      <select id="word_count" value="10">
           <option value="10">10</option>
           <option value="20">20</option>
       </select>
