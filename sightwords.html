@@ -144,6 +144,7 @@ third_grade = [
 
 word_list = [];
 function start_words() {
+    var read_write = $("#read_write")[0].value;
     var raw_words = [];
     if ($("#grade1")[0].value) {
         raw_words = first_grade;
@@ -166,10 +167,19 @@ function start_words() {
 
     var first_word = word_list[word_index].word;
     document.getElementById("word").innerHTML = first_word;
-    $("#p_grade_boxes").hide();
-    $("#p_word_count").hide();
     $(".init_show").hide();
-    $(".init_hide").show();
+    if (read_write == "read") {
+        $(".reading").show();
+        // set up space key handler
+        $(window).keypress(function(e) {
+            if (e.keyCode === 0 || e.keyCode === 0x20) {
+                e.preventDefault();
+                next_word();
+            }
+        });
+    } else if (read_write == "write") {
+        $(".typing").show();
+    }
     start_time = (new Date()).getTime();
 }
 function next_word() {
@@ -212,23 +222,28 @@ $(function() {
 
 <body>
     <h1 id="ready" class="init_show">Ready?</h1>
-    <h1 id="word" class="init_hide">()</h1>
-    <p id="p_grade_boxes">
+    <h1 id="word" class="init_hide reading typing">()</h1>
+    <p id="p_grade_boxes" class="init_show">
       <input type="checkbox" checked=1 id="grade1">Grade 1</input>
       <input type="checkbox" checked=1 id="grade2">Grade 2</input>
       <input type="checkbox" checked=1 id="grade3">Grade 3</input>
     </p>
-    <p id="p_word_count">
-      <select id="word_count" value="10">
+    <p id="p_word_count" class="init_show">
+      <select id="read_write" value="read">
+          <option value="read">Read</option>
+          <option value="write">Type</option>
+      </select>
+      <select id="word_count" value="20">
           <option value="10">10</option>
           <option value="20">20</option>
       </select>
     </p>
-    <p><input id="typespace" class="init_hide" type="text"></input></p>
+    <p><input id="typespace" class="init_hide typing" type="text"></input></p>
     <button type="button" class="init_show" onclick='start_words()'>
         START
     </button>
-    <button type="button" class="init_hide" onclick='next_word()'>
+    <button type="button" class="init_hide reading typing"
+        onclick='next_word()'>
         NEXT
     </button>
 </body>
